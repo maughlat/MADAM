@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — MADAM</title>
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="nav"></div>
+
+  <!-- ============ WHO WE ARE (with our group photo) ============ -->
+  <header class="page-head page-head--split">
+    <div class="container">
+      <div>
+        <span class="label">About</span>
+        <h1>Who we are</h1>
+        <p>MADAM is a student project about gender equality. We built it to learn, to share what we found,
+          and to give people a place to speak without having to give their name.</p>
+      </div>
+
+      <!-- Group photo: save it as assets/team.jpg. Until then, a placeholder shows inside the frame. -->
+      <figure class="polaroid">
+        <img src="assets/team.jpg" alt="The MADAM group: Maxime, Andrian, Dionne, Amiel, and Mikylla"
+          onerror="this.closest('.polaroid').classList.add('is-empty')">
+        <div class="polaroid__empty" aria-hidden="true">Our photo goes here</div>
+        <figcaption>us, M.A.D.A.M. ♥</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <!-- ============ THE NAME ============ -->
+  <section class="section">
+    <div class="container cols cols--center">
+      <div class="reveal">
+        <span class="label">The name</span>
+        <h2>It reads the same both ways</h2>
+
+        <!-- our logo, drawing itself in when it scrolls into view -->
+        <figure class="name-art">
+          <div class="name-art__disc">
+          <svg class="name-art__logo" viewBox="8 20 450 294" role="img" aria-label="The MADAM logo: the female and male symbols joined into an infinity sign">
+            <g fill="none" stroke="#3A2D27" stroke-width="11" stroke-linecap="butt" stroke-linejoin="round">
+              <path pathLength="1" d="M195 112 L160.5 76 A88 88 0 1 0 177 205 L301 80.5 A80 80 0 1 1 285.7 197.4 L266 177"/>
+              <path pathLength="1" d="M104 200 V92 L168 156"/>
+              <path pathLength="1" d="M213 205 L330 88 V200"/>
+              <path pathLength="1" d="M110 236 V302 M84 272 H136"/>
+              <path pathLength="1" d="M398.4 84.7 L444 38 M418 38 H444 V64"/>
+            </g>
+          </svg>
+          </div>
+          <figcaption class="name-art__key">
+            <span style="--tone:var(--coral);--tint:var(--coral-soft)"><b>♀</b> female</span>
+            <span style="--tone:var(--teal);--tint:var(--teal-soft)"><b>♂</b> male</span>
+            <span style="--tone:var(--berry);--tint:var(--berry-soft)"><b>∞</b> joined as one, equally</span>
+          </figcaption>
+        </figure>
+      </div>
+      <div class="reveal narrow">
+        <p class="lede">Forward or backward, MADAM doesn't change. We liked that. It's how we think people
+          should be treated, whichever side they're standing on.</p>
+        <p>The name M.A.D.A.M. (Making A Difference, Always Magnificent) represents a group that believes in the
+          power of unity, equality, and friendship. The logo combines the female and male symbols into an infinity
+          sign, representing that both genders are equally important and should always be treated with respect.
+          It symbolizes the coming together of different identities, showing that differences should never be a
+          reason for division. As M.A.D.A.M., we aim to make a difference through our teamwork, support, and shared
+          belief that everyone deserves equal opportunities.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FROM OUR MEMBERS ============
+       To fill these in: replace [Role / Section] and the quote in each card.
+       To add photos: save them as assets/maxime.jpg, assets/andrian.jpg, assets/dionne.jpg,
+       assets/amiel.jpg, and assets/mikylla.jpg (square photos look best). -->
+  <section class="section">
+    <div class="container">
+      <div class="head reveal">
+        <div>
+          <span class="label">From our members</span>
+          <h2>In our own words</h2>
+        </div>
+        <p>Five of us made this site. Here's why it matters to each of us.</p>
+      </div>
+
+      <div class="members">
+        <article class="member reveal" style="--tone:var(--coral);--tint:var(--coral-soft)">
+          <div class="member__top">
+            <div class="member__avatar"><span>M</span><img src="assets/maxime.jpg" alt="" onerror="this.remove()"></div>
+            <div><h3>Maxime</h3><p class="member__role">[Role / Section]</p></div>
+          </div>
+          <blockquote class="member__quote">"[Write your testimony here — why gender equality matters to you.]"</blockquote>
+        </article>
+
+        <article class="member reveal" style="--tone:var(--teal);--tint:var(--teal-soft)">
+          <div class="member__top">
+            <div class="member__avatar"><span>A</span><img src="assets/andrian.jpg" alt="" onerror="this.remove()"></div>
+            <div><h3>Andrian</h3><p class="member__role">[Role / Section]</p></div>
+          </div>
+          <blockquote class="member__quote">"[Write your testimony here — why gender equality matters to you.]"</blockquote>
+        </article>
+
+        <article class="member reveal" style="--tone:var(--berry);--tint:var(--berry-soft)">
+          <div class="member__top">
+            <div class="member__avatar"><span>D</span><img src="assets/dionne.jpg" alt="" onerror="this.remove()"></div>
+            <div><h3>Dionne</h3><p class="member__role">[Role / Section]</p></div>
+          </div>
+          <blockquote class="member__quote">"[Write your testimony here — why gender equality matters to you.]"</blockquote>
+        </article>
+
+        <article class="member reveal" style="--tone:#C88B12;--tint:var(--sun-soft)">
+          <div class="member__top">
+            <div class="member__avatar"><span>A</span><img src="assets/amiel.jpg" alt="" onerror="this.remove()"></div>
+            <div><h3>Amiel</h3><p class="member__role">[Role / Section]</p></div>
+          </div>
+          <blockquote class="member__quote">"[Write your testimony here — why gender equality matters to you.]"</blockquote>
+        </article>
+
+        <article class="member reveal" style="--tone:var(--coral);--tint:var(--coral-soft)">
+          <div class="member__top">
+            <div class="member__avatar"><span>M</span><img src="assets/mikylla.jpg" alt="" onerror="this.remove()"></div>
+            <div><h3>Mikylla</h3><p class="member__role">[Role / Section]</p></div>
+          </div>
+          <blockquote class="member__quote">"[Write your testimony here — why gender equality matters to you.]"</blockquote>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHO IT'S FOR ============ -->
+  <section class="section section--tint">
+    <div class="container cols">
+      <div class="reveal">
+        <span class="label">Who it's for</span>
+        <h2>Everyone, honestly</h2>
+        <p class="lede">This isn't women against men. Rigid gender roles hurt a lot of people: women who get paid
+          less, men who are told not to cry, LGBTQ+ people who are told they don't belong.</p>
+        <p>If you think fairness shouldn't depend on gender, this is for you.</p>
+      </div>
+      <div class="reveal">
+        <blockquote class="pull">
+          "We cannot all succeed when half of us are held back."
+          <cite>Malala Yousafzai</cite>
+        </blockquote>
+        <p style="margin-top:40px"><a href="issue.html" class="arrow-link">Next: the issue</a></p>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+  <script src="js/main.js"></script>
+</body>
+</html>
