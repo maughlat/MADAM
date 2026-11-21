@@ -50,6 +50,18 @@ const Store = (() => {
     window.dispatchEvent(new CustomEvent('madam-store', { detail: c }));
   };
 
+  /* Fresh start: when WALL_VERSION changes, every browser clears its saved notes
+     (and reactions) once, so the wall looks good as new. To wipe the wall again
+     later, just change this number. (This only clears notes saved in browsers;
+     notes in Firebase are deleted from the Firebase console.) */
+  const WALL_VERSION = '2';
+  try {
+    if (localStorage.getItem('madam_wall_version') !== WALL_VERSION) {
+      ['madam_notes', 'madam_my_reactions', 'madam_last_note'].forEach(k => localStorage.removeItem(k));
+      localStorage.setItem('madam_wall_version', WALL_VERSION);
+    }
+  } catch { /* storage blocked: nothing saved to clear */ }
+
   api.ready = (configured ? initFirebase() : Promise.resolve()).catch(err => {
     console.warn('[MADAM] Firebase unavailable, using local mode.', err);
     api.mode = 'local';
