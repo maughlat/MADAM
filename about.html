@@ -25,12 +25,19 @@
       </div>
 
       <!-- Group photo: save it as assets/team.jpg. Until then, a placeholder shows inside the frame. -->
-      <figure class="polaroid">
-        <img src="assets/team.jpg" alt="The MADAM group: Maxime, Andrian, Dionne, Amiel, and Mikylla"
-          onerror="this.closest('.polaroid').classList.add('is-empty')">
+      <!-- Group photo: warm, graded like the member prints; it "develops" when the page opens,
+           and shows full colour on hover or tap. -->
+      <div class="polaroid-wrap">
+      <figure class="polaroid" tabindex="0">
+        <div class="polaroid__photo">
+          <img src="assets/team.jpg" alt="The MADAM group: Maxime, Andrian, Dionne, Amiel, and Mikylla"
+            onerror="this.closest('.polaroid').classList.add('is-empty')">
+          <span class="polaroid__haze" aria-hidden="true"></span>
+        </div>
         <div class="polaroid__empty" aria-hidden="true">Our photo goes here</div>
         <figcaption>us, M.A.D.A.M. ♥</figcaption>
       </figure>
+      </div>
     </div>
   </header>
 
@@ -87,46 +94,79 @@
         <p>Five of us made this site. Here's why it matters to each of us.</p>
       </div>
 
-      <div class="members">
-        <article class="member reveal" style="--tone:var(--coral);--tint:var(--coral-soft)">
-          <div class="member__top">
-            <div class="member__avatar"><span>M</span><img src="assets/maxime.jpg" alt="Photo of Maxime" onerror="this.remove()"></div>
-            <h3>Maxime</h3>
-          </div>
-          <blockquote class="member__quote member__quote--short">A person's potential has no gender, and their dreams should have no limits.</blockquote>
-        </article>
-
-        <article class="member reveal" style="--tone:var(--teal);--tint:var(--teal-soft)">
-          <div class="member__top">
-            <div class="member__avatar"><span>A</span><img src="assets/andrian.jpg" alt="Photo of Andrian" onerror="this.remove()"></div>
-            <h3>Andrian</h3>
-          </div>
-          <blockquote class="member__quote">Gender equality matters to me because I believe everyone deserves to be treated equally, regardless of their gender. No one should feel less important, limited, or judged just because of who they are. I believe everyone should have the same opportunities, respect, and freedom to pursue their dreams. For me, equality is not about making one gender better than another; it is about giving everyone a fair chance. We may have differences, but those differences should never be a reason to discriminate against someone. I want to live in a society where people are respected for who they are and what they can do, not judged by their gender.</blockquote>
-        </article>
-
-        <article class="member reveal" style="--tone:var(--berry);--tint:var(--berry-soft)">
-          <div class="member__top">
-            <div class="member__avatar"><span>D</span><img src="assets/dionne.jpg" alt="Photo of Dionne" onerror="this.remove()"></div>
-            <h3>Dionne</h3>
-          </div>
-          <blockquote class="member__quote">Gender equality is not just about treating everyone the same, it is about making sure everyone has the same opportunities, rights, and respect regardless of gender. Even today, discrimination, stereotypes, and unequal treatment still exist, which is why we must not turn a blind eye to them. We believe that change begins when people acknowledge that the problem still exists and choose to be part of the solution. Everyone deserves to feel valued, heard, and empowered.</blockquote>
-        </article>
-
-        <article class="member reveal" style="--tone:#C88B12;--tint:var(--sun-soft)">
-          <div class="member__top">
-            <div class="member__avatar"><span>A</span><img src="assets/amiel.jpg" alt="Photo of Amiel" onerror="this.remove()"></div>
-            <h3>Amiel</h3>
-          </div>
-          <blockquote class="member__quote">Society is now loudly demanding for more equal treatment and wages between straight men, women, and LGBTQIA+. We must heed to these calls by advancing and empowering the rights of women and LGBTQIA+, both in school and in the workplace. When everyone is given the opportunity to participate, contribute, and thrive without prejudice, all can be more productive and harmonious; all people will be valued regardless of gender or creed.</blockquote>
-        </article>
-
-        <article class="member reveal" style="--tone:var(--coral);--tint:var(--coral-soft)">
-          <div class="member__top">
-            <div class="member__avatar"><span>M</span><img src="assets/mikylla.jpg" alt="Photo of Mikylla" onerror="this.remove()"></div>
-            <h3>Mikylla</h3>
-          </div>
-          <blockquote class="member__quote">Gender equality matters to me because no one should have to change who they are to be accepted. Gender should never decide what we can do or how much respect we get. We should all be free to be ourselves without shame. I want to help build a kinder, less judgmental world where everyone feels they belong. Without the labels, we are all different, we are all valid, and we all deserve the same respect and dignity. “Labels may well divide us in the eyes of others, but they will never in any way define our value.”</blockquote>
-        </article>
+      <!-- The five cards drift slowly right to left like a film strip; their big initials spell
+           M · A · D · A · M. Hover (or tap) a card to pause and bring it forward; drag the strip
+           or use the arrows to move it by hand. js/reel.js -->
+      <div class="reel" data-reel>
+        <div class="reel__track">
+          <article class="mcard mcard--left" tabindex="0" style="--tone:var(--coral);--tint:var(--coral-soft)">
+            <figure class="mcard__photo">
+              <img src="assets/maxime.jpg" alt="Photo of Maxime" loading="lazy"
+                draggable="false"
+                onerror="this.closest('.mcard__photo').classList.add('is-empty');this.remove()">
+              <span class="mcard__letter" aria-hidden="true">M</span>
+            </figure>
+            <div class="mcard__body">
+              <p class="mcard__meta"><span class="mcard__name">Maxime</span><span class="mcard__no">01 / 05</span></p>
+              <blockquote class="mcard__quote mcard__quote--short">A person's potential has no gender, and their dreams should have no limits.</blockquote>
+            </div>
+          </article>
+          <article class="mcard mcard--right" tabindex="0" style="--tone:var(--teal);--tint:var(--teal-soft)">
+            <figure class="mcard__photo">
+              <img src="assets/andrian.jpg" alt="Photo of Andrian" loading="lazy"
+                draggable="false"
+                onerror="this.closest('.mcard__photo').classList.add('is-empty');this.remove()">
+              <span class="mcard__letter" aria-hidden="true">A</span>
+            </figure>
+            <div class="mcard__body">
+              <p class="mcard__meta"><span class="mcard__name">Andrian</span><span class="mcard__no">02 / 05</span></p>
+              <blockquote class="mcard__quote">Gender equality matters to me because everyone deserves equal respect, rights, and opportunities regardless of gender. I believe no one should be judged or treated unfairly because of who they are. For me, equality means giving everyone a fair chance to succeed. We should learn to respect each other’s differences and treat everyone with kindness.</blockquote>
+            </div>
+          </article>
+          <article class="mcard mcard--left" tabindex="0" style="--tone:var(--berry);--tint:var(--berry-soft)">
+            <figure class="mcard__photo">
+              <img src="assets/dionne.jpg" alt="Photo of Dionne" loading="lazy"
+                draggable="false"
+                onerror="this.closest('.mcard__photo').classList.add('is-empty');this.remove()">
+              <span class="mcard__letter" aria-hidden="true">D</span>
+            </figure>
+            <div class="mcard__body">
+              <p class="mcard__meta"><span class="mcard__name">Dionne</span><span class="mcard__no">03 / 05</span></p>
+              <blockquote class="mcard__quote">Gender equality is not just about treating everyone the same, it is about making sure everyone has the same opportunities, rights, and respect regardless of gender. Even today, discrimination, stereotypes, and unequal treatment still exist, which is why we must not turn a blind eye to them. We believe that change begins when people acknowledge that the problem still exists and choose to be part of the solution. Everyone deserves to feel valued, heard, and empowered.</blockquote>
+            </div>
+          </article>
+          <article class="mcard mcard--right" tabindex="0" style="--tone:#C88B12;--tint:var(--sun-soft)">
+            <figure class="mcard__photo">
+              <img src="assets/amiel.jpg" alt="Photo of Amiel" loading="lazy"
+                draggable="false"
+                onerror="this.closest('.mcard__photo').classList.add('is-empty');this.remove()">
+              <span class="mcard__letter" aria-hidden="true">A</span>
+            </figure>
+            <div class="mcard__body">
+              <p class="mcard__meta"><span class="mcard__name">Amiel</span><span class="mcard__no">04 / 05</span></p>
+              <blockquote class="mcard__quote">Society is now loudly demanding more equal treatment and wages between straight men, women, and LGBTQIA+. We must heed these calls by advancing and empowering the rights of women and LGBTQIA+, both in school and in the workplace. When everyone is given the opportunity to participate, contribute, and thrive without prejudice, all can be more productive and harmonious; all people will be valued regardless of gender or creed.</blockquote>
+            </div>
+          </article>
+          <article class="mcard mcard--left" tabindex="0" style="--tone:var(--coral);--tint:var(--coral-soft)">
+            <figure class="mcard__photo">
+              <img src="assets/mikylla.jpg" alt="Photo of Mikylla" loading="lazy"
+                draggable="false"
+                onerror="this.closest('.mcard__photo').classList.add('is-empty');this.remove()">
+              <span class="mcard__letter" aria-hidden="true">M</span>
+            </figure>
+            <div class="mcard__body">
+              <p class="mcard__meta"><span class="mcard__name">Mikylla</span><span class="mcard__no">05 / 05</span></p>
+              <blockquote class="mcard__quote">Gender equality matters to me because no one should have to change who they are to be accepted. Gender should never decide what we can do or how much respect we get. We should all be free to be ourselves without shame. I want to help build a kinder, less judgmental world where everyone feels they belong. Without the labels, we are all different, we are all valid, and we all deserve the same respect and dignity. <strong class="mcard__pull">“Labels may well divide us in the eyes of others, but they will never in any way define our value.”</strong></blockquote>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="reel-controls">
+        <p class="reel-controls__hint">Drag the strip, or use the arrows.</p>
+        <div class="reel-controls__btns">
+          <button class="reel-btn" type="button" data-reel-prev aria-label="Previous member"><i class="ph-light ph-arrow-left"></i></button>
+          <button class="reel-btn" type="button" data-reel-next aria-label="Next member"><i class="ph-light ph-arrow-right"></i></button>
+        </div>
       </div>
     </div>
   </section>
@@ -153,5 +193,6 @@
 
   <div id="footer"></div>
   <script src="js/main.js"></script>
+  <script src="js/reel.js"></script>
 </body>
 </html>

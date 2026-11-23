@@ -564,12 +564,23 @@ strong { font-weight: 700; }
 }
 @media (max-width: 860px) { .page-head--split .container { grid-template-columns: 1fr; } }
 
-/* a paper polaroid with a strip of washi tape */
+/* a paper polaroid with a strip of washi tape, with a second print tucked behind it */
+.polaroid-wrap { position: relative; z-index: 0; justify-self: center; width: min(100%, 460px); }
+.polaroid-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #F6EEDD;
+  border-radius: 4px;
+  transform: rotate(-4.5deg) translate(-14px, 8px);
+  box-shadow: 0 2px 3px rgba(58, 45, 39, .08), 6px 18px 30px -18px rgba(58, 45, 39, .45);
+}
 .polaroid {
   position: relative;
-  justify-self: center;
-  width: min(100%, 460px);
+  width: 100%;
   margin: 0;
+  outline: none;
   padding: 14px 14px 58px;
   background: #FFFDF7;
   border-radius: 4px;
@@ -577,7 +588,8 @@ strong { font-weight: 700; }
   transform: rotate(2.5deg);
   transition: transform .5s var(--ease);
 }
-.polaroid:hover { transform: rotate(.5deg) translateY(-4px); }
+.polaroid:hover, .polaroid:focus-visible { transform: rotate(.5deg) translateY(-4px); }
+.polaroid:focus-visible { box-shadow: 0 0 0 3px var(--teal), 8px 22px 34px -16px rgba(58, 45, 39, .5); }
 .polaroid::before {
   content: '';
   position: absolute;
@@ -590,7 +602,49 @@ strong { font-weight: 700; }
   box-shadow: 0 1px 2px rgba(58, 45, 39, .15);
   z-index: 2;
 }
-.polaroid img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 2px; }
+.polaroid__photo { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 2px; background: #D49B4A; }
+.polaroid__photo img {
+  display: block;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.08) brightness(1.06);   /* graded like the member prints */
+  transform: scale(1.01);
+  transition: filter .9s var(--ease), transform 1.4s var(--ease);
+}
+.polaroid__photo::before {                     /* warm honey wash, like an old print */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: #D49B4A;
+  mix-blend-mode: multiply;
+  opacity: .45;
+  transition: opacity .9s var(--ease);
+  pointer-events: none;
+}
+.polaroid__photo::after {                      /* fine film grain */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 180px 180px;
+  mix-blend-mode: multiply;
+  opacity: .3;
+  pointer-events: none;
+}
+.polaroid__haze {                              /* the photo "develops" when the page opens */
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: #F4EEE2;
+  animation: develop 3.4s var(--ease) .5s both;
+  pointer-events: none;
+}
+@keyframes develop { from { opacity: 1; } to { opacity: 0; } }
+.polaroid:hover .polaroid__photo img, .polaroid:focus-visible .polaroid__photo img, .polaroid:active .polaroid__photo img { filter: none; transform: scale(1.04); }
+.polaroid:hover .polaroid__photo::before, .polaroid:focus-visible .polaroid__photo::before, .polaroid:active .polaroid__photo::before { opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .polaroid__haze { display: none; } }
 .polaroid__empty {
   display: none;
   place-items: center;
@@ -602,7 +656,7 @@ strong { font-weight: 700; }
   font-size: 1.9rem;
   color: #A87309;
 }
-.polaroid.is-empty img { display: none; }
+.polaroid.is-empty .polaroid__photo { display: none; }
 .polaroid.is-empty .polaroid__empty { display: grid; }
 .polaroid figcaption {
   position: absolute;
@@ -650,51 +704,139 @@ strong { font-weight: 700; }
 @media (max-width: 800px) { .name-art { margin: 28px auto 0; } }
 .cols--center { align-items: center; }
 
-/* ---------- About: member testimonials ---------- */
-.members { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(18px, 2vw, 28px); }
-.member {
-  grid-column: span 2;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  padding: clamp(24px, 2.2vw, 34px);
-  background: var(--paper);
-  border-radius: 22px;
-  border-top: 6px solid var(--tone);
-  box-shadow: var(--shadow);
-  transition: transform .35s var(--ease), background .35s;
-}
-.member:hover { transform: translateY(-5px); background: var(--tint); }
-.member:nth-child(4) { grid-column: 2 / span 2; }          /* 3 on top, 2 centered below */
-.member:nth-child(5) { grid-column: 4 / span 2; }
-.member__top { display: flex; align-items: center; gap: 16px; }
-.member__top h3 { margin: 0; }
-.member__avatar {
+/* ---------- About: "In our own words" film strip ---------- */
+.reel {
   position: relative;
-  flex-shrink: 0;
-  width: 64px; height: 64px;
-  border-radius: 50%;
-  background: var(--tint);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);            /* runs edge to edge, past the page margins */
+  padding: 30px 0 40px;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;                      /* vertical page scrolling still works on phones */
+  -webkit-user-select: none;
+          user-select: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+.reel__track { display: flex; align-items: flex-start; width: max-content; will-change: transform; }   /* moved by js/reel.js */
+.reel.is-dragging { cursor: grabbing; }
+.reel img { -webkit-user-drag: none; }
+/* while dragging, keep every card crisp (no hover dimming) */
+.reel.is-dragging .mcard { filter: none !important; opacity: 1 !important; transform: none !important; }
+
+/* a single card: a portrait print with its story underneath */
+.mcard {
+  flex: 0 0 clamp(262px, 23vw, 336px);
+  margin-right: clamp(22px, 2.6vw, 44px);   /* spacing lives on each card, so the loop is exact */
+  background: var(--paper);
+  border-radius: 4px;
+  box-shadow: 0 1px 0 rgba(58, 45, 39, .06), 0 20px 36px -24px rgba(58, 45, 39, .55);
+  outline: none;
+  transition: filter .55s var(--ease), opacity .55s var(--ease), transform .55s var(--ease), box-shadow .55s var(--ease);
+}
+.mcard--right { margin-top: 52px; }         /* staggered like prints pinned along a wall */
+
+.mcard__photo {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 4px 4px 0 0;
+  background: var(--tone);
+}
+.mcard__photo img {
+  display: block;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.08) brightness(1.05);
+  transform: scale(1.02);
+  transition: filter .8s var(--ease), transform 1.4s var(--ease);
+}
+.mcard__photo::before {                       /* a wash of the card's colour: one shared grade for every photo */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--tone);
+  mix-blend-mode: multiply;
+  opacity: .42;
+  transition: opacity .8s var(--ease);
+  pointer-events: none;
+}
+.mcard__photo::after {                        /* fine film grain */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 180px 180px;
+  mix-blend-mode: multiply;
+  opacity: .28;
+  pointer-events: none;
+}
+/* the member's initial, cut out of the print: together the five spell MADAM */
+.mcard__letter {
+  position: absolute;
+  z-index: 3;
+  left: 12px; bottom: -.24em;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: clamp(6.4rem, 8.4vw, 8.6rem);
+  line-height: 1;
+  color: var(--paper);
+  pointer-events: none;
+}
+.mcard--right .mcard__letter { left: auto; right: 12px; }
+.mcard__photo.is-empty::before { opacity: 0; }  /* no photo yet: a solid colour block with the initial */
+
+.mcard__body { padding: 22px 24px 26px; }
+.mcard__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0 0 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid color-mix(in srgb, var(--tone) 40%, transparent);
+}
+.mcard__name { font-family: var(--font-head); font-weight: 600; font-size: 1.45rem; letter-spacing: -.01em; }
+.mcard__no { font-size: .72rem; font-weight: 700; letter-spacing: .14em; color: var(--tone); }
+.mcard__quote { margin: 0; font-family: var(--font-head); font-size: 1rem; line-height: 1.62; color: var(--ink); }
+.mcard__quote::before { content: '“'; color: var(--tone); font-size: 1.3em; line-height: 0; margin-right: 1px; }
+.mcard__quote--short { font-size: 1.5rem; line-height: 1.3; font-style: italic; }
+.mcard__pull { display: block; margin-top: 12px; font-weight: 600; font-style: italic; color: var(--ink); }   /* a quote inside a testimony */
+
+/* the ‹ › controls under the strip */
+.reel-controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 4px; }
+.reel-controls__hint { margin: 0; font-family: var(--font-hand); font-size: 1.35rem; color: var(--muted); }
+.reel-controls__btns { display: flex; gap: 10px; }
+.reel-btn {
   display: grid;
   place-items: center;
-  overflow: hidden;
-  box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px var(--tone);
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: background .3s var(--ease), color .3s var(--ease), transform .3s var(--ease);
 }
-.member__avatar span { font-family: var(--font-head); font-size: 1.9rem; font-weight: 600; color: var(--tone); }
-.member__avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.member__quote { position: relative; margin: 0; padding-top: 6px; font-family: var(--font-head); font-size: 1.08rem; line-height: 1.6; color: var(--ink); }
-.member__quote::before { content: '“'; display: block; height: 22px; font-size: 3rem; line-height: 1; color: var(--tone); opacity: .55; }
-/* a one-line testimony gets more presence so the card doesn't feel empty */
-.member__quote--short { flex: 1; display: flex; flex-direction: column; justify-content: center; font-size: clamp(1.4rem, 1.9vw, 1.8rem); font-style: italic; line-height: 1.35; }
-@media (max-width: 1000px) {
-  .members { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .member, .member:nth-child(4) { grid-column: span 1; }
-  .member:nth-child(5) { grid-column: 1 / -1; width: min(100%, calc(50% - 12px)); justify-self: center; }
+.reel-btn:hover { background: var(--ink); color: var(--cream); }
+.reel-btn:active { transform: scale(.92); }
+.reel-btn:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+
+/* hover / keyboard focus / tap: bring one card forward, soften the rest */
+.reel:has(.mcard:hover) .mcard:not(:hover),
+.reel:has(.mcard:focus-visible) .mcard:not(:focus-visible),
+.reel.has-active .mcard:not(.is-active) { filter: blur(3px) saturate(.6); opacity: .4; }
+.mcard:hover, .mcard:focus-visible, .mcard.is-active {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 2px 0 rgba(58, 45, 39, .05), 0 30px 50px -24px rgba(58, 45, 39, .6);
 }
-@media (max-width: 600px) {
-  .members { grid-template-columns: 1fr; }
-  .member:nth-child(5) { width: 100%; }
-}
+.mcard:hover .mcard__photo img, .mcard:focus-visible .mcard__photo img, .mcard.is-active .mcard__photo img { filter: none; transform: scale(1.06); }
+.mcard:hover .mcard__photo::before, .mcard:focus-visible .mcard__photo::before, .mcard.is-active .mcard__photo::before { opacity: 0; }
+.mcard:focus-visible { outline: 2px solid var(--tone); outline-offset: 5px; }
+
 
 .pull {
   margin: 0;

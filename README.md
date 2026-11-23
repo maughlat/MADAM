@@ -100,5 +100,5 @@ The site also has built-in filters (in `js/safespace.js`):
 ## Photos and testimonials to add
 
 - **Group photo:** save it as `assets/team.jpg` (landscape, 4:3 looks best). Until then, the About page shows a placeholder inside the frame.
-- **Member photos:** save square photos as `assets/maxime.jpg`, `assets/andrian.jpg`, `assets/dionne.jpg`, `assets/amiel.jpg`, `assets/mikylla.jpg`. Until then, each card shows the member's initial.
-- **Mikylla's photo:** still to add as `assets/mikylla.jpg` (square). Until then her card shows her initial.
+- **Member photos:** save portrait (4:5) photos as `assets/maxime.jpg`, `assets/andrian.jpg`, `assets/dionne.jpg`, `assets/amiel.jpg`, `assets/mikylla.jpg`. Until then, a card shows a colour block with the member's initial.
+- **Mikylla's photo:** still to add as `assets/mikylla.jpg` (portrait, 4:5, about 640 × 800). Until then her card shows a colour block with her initial.
