@@ -18,12 +18,33 @@
   <!-- Content inspired by and sourced from the United Nations' Gender Equality page:
        https://www.un.org/en/global-issues/gender-equality (written in our own words) -->
 
-  <header class="page-head">
+  <header class="page-head page-head--split">
     <div class="container">
-      <span class="label">The issue</span>
-      <h1>Gender equality is still unfinished</h1>
-      <p>Women and girls make up half of the world's people, and half of its potential. Equal rights are
-        a basic human right, and they also make communities more peaceful and better off. We're not there yet.</p>
+      <div>
+        <span class="label">The issue</span>
+        <h1>Gender equality is still unfinished</h1>
+        <p>Women and girls make up half of the world's people, and half of its potential. Equal rights are
+          a basic human right, and they also make communities more peaceful and better off. We're not there yet.</p>
+      </div>
+
+      <!-- "Out of every 100": a dot chart that cycles through the facts on this page. js/issue-dots.js -->
+      <div class="dots" data-dots>
+        <p class="dots__kicker">Out of every 100</p>
+        <div class="dots__headline" aria-live="polite">
+          <span class="dots__num" data-dots-num>27</span>
+          <p class="dots__caption" data-dots-caption>seats in national parliaments are held by women.</p>
+        </div>
+        <div class="dots__grid" data-dots-grid aria-hidden="true"></div>
+        <div class="dots__footer">
+          <div class="dots__tabs" role="tablist" aria-label="Choose a fact">
+            <button type="button" class="dots__tab" role="tab" data-fact="0">Parliament</button>
+            <button type="button" class="dots__tab" role="tab" data-fact="1">Violence</button>
+            <button type="button" class="dots__tab" role="tab" data-fact="2">Pay</button>
+            <button type="button" class="dots__tab" role="tab" data-fact="3">Laws</button>
+          </div>
+          <p class="dots__source">Figures: United Nations</p>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -240,5 +261,6 @@
 
   <div id="footer"></div>
   <script src="js/main.js"></script>
+  <script src="js/issue-dots.js"></script>
 </body>
 </html>

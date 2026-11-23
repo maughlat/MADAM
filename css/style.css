@@ -667,6 +667,62 @@ strong { font-weight: 700; }
   color: var(--ink);
 }
 
+/* ---------- The Issue: "Out of every 100" dot chart ---------- */
+.dots {
+  --tone: var(--berry); --tint: var(--berry-soft);
+  justify-self: end;
+  width: min(100%, 580px);                  /* landscape: wide and short */
+  padding: 22px 26px 18px;
+  background: var(--paper);
+  border-radius: 22px;
+  border-top: 6px solid var(--tone);
+  box-shadow: var(--shadow);
+  transition: border-color .6s var(--ease);
+}
+.dots__kicker { margin: 0; font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.dots__headline { display: flex; align-items: center; gap: 16px; min-height: 3.2em; margin: 4px 0 14px; }
+.dots__num {
+  flex-shrink: 0;
+  min-width: 2ch;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: clamp(2.6rem, 3.6vw, 3.3rem);
+  line-height: 1;
+  color: var(--tone);
+  font-variant-numeric: tabular-nums;
+  transition: color .6s var(--ease);
+}
+.dots__caption { margin: 0; font-size: .92rem; line-height: 1.42; color: var(--ink); }
+.dots__grid { display: grid; grid-template-columns: repeat(20, minmax(0, 1fr)); gap: clamp(3px, .4vw, 6px); }   /* 20 across × 5 down */
+.dots__dot {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(58, 45, 39, .1);
+  transform: scale(.78);
+  transition: background .45s var(--ease), transform .45s var(--ease);
+}
+.dots__dot.is-on { background: var(--tone); transform: scale(1); }
+.dots__dot:hover { transform: scale(1.3); transition-delay: 0s !important; }
+.dots__footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 16px; margin-top: 16px; }
+.dots__tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.dots__tab {
+  border: 1.5px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 5px 13px;
+  font-family: inherit;
+  font-size: .86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .3s, color .3s, border-color .3s;
+}
+.dots__tab:hover { border-color: var(--tone); }
+.dots__tab.is-active { background: var(--tone); border-color: var(--tone); color: #fff; }
+.dots__source { margin: 0; font-size: .72rem; color: var(--muted); }
+@media (max-width: 860px) { .dots { justify-self: stretch; width: 100%; max-width: 580px; } }
+@media (max-width: 520px) { .dots__grid { grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 5px; } }   /* phones: 10 × 10 so dots stay visible */
+
 /* ---------- About: the logo, drawn in ---------- */
 .name-art { margin: 36px 0 0; max-width: 460px; }
 .name-art__disc {                        /* the soft sunny circle, kept clear of the text above and below */
@@ -726,7 +782,12 @@ strong { font-weight: 700; }
 
 /* a single card: a portrait print with its story underneath */
 .mcard {
-  flex: 0 0 clamp(262px, 23vw, 336px);
+  --w: clamp(262px, 23vw, 336px);
+  --body: 232px;                            /* text area height; every card is the same size (Maxime's) */
+  position: relative;
+  flex: 0 0 var(--w);
+  height: calc(var(--w) * 1.25 + var(--body));
+  overflow: hidden;
   margin-right: clamp(22px, 2.6vw, 44px);   /* spacing lives on each card, so the loop is exact */
   background: var(--paper);
   border-radius: 4px;
@@ -789,7 +850,18 @@ strong { font-weight: 700; }
 .mcard--right .mcard__letter { left: auto; right: 12px; }
 .mcard__photo.is-empty::before { opacity: 0; }  /* no photo yet: a solid colour block with the initial */
 
-.mcard__body { padding: 22px 24px 26px; }
+/* the text panel sits under the photo; when a card is opened it slides up over the photo */
+.mcard__body {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 4;
+  height: var(--body);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 22px 16px;
+  background: var(--paper);
+  transition: height .7s var(--ease), box-shadow .7s var(--ease);
+}
 .mcard__meta {
   display: flex;
   justify-content: space-between;
@@ -804,6 +876,72 @@ strong { font-weight: 700; }
 .mcard__quote::before { content: '“'; color: var(--tone); font-size: 1.3em; line-height: 0; margin-right: 1px; }
 .mcard__quote--short { font-size: 1.5rem; line-height: 1.3; font-style: italic; }
 .mcard__pull { display: block; margin-top: 12px; font-weight: 600; font-style: italic; color: var(--ink); }   /* a quote inside a testimony */
+
+/* preview: the highlight of what they said (fitted to 3 lines by js/reel.js) */
+.mcard__preview { flex: 1; display: flex; flex-direction: column; justify-content: space-between; min-height: 0; transition: opacity .35s var(--ease); }
+.mcard__hl-quote {
+  margin: 0;
+  font-family: var(--font-head);
+  font-style: italic;
+  font-size: var(--hl-size, 1.4rem);
+  line-height: 1.3;
+  color: var(--ink);
+}
+.mcard__hl-quote::before { content: '“'; color: var(--tone); }
+.mcard__hl-quote::after { content: '”'; color: var(--tone); }
+.mcard__more {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--tone);
+}
+.mcard__more .ph-light { transition: transform .4s var(--ease); }
+.mcard:hover .mcard__more .ph-light { transform: translateY(-3px); }
+
+/* full testimony, revealed when the card opens */
+.mcard__full {
+  position: absolute;
+  left: 22px; right: 18px; top: 74px; bottom: 16px;
+  margin: 0;
+  padding-right: 6px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  font-family: var(--font-head);
+  font-size: .98rem;
+  line-height: 1.6;
+  color: var(--ink);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s var(--ease);
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--tone) 45%, transparent) transparent;
+}
+.mcard__full::before { content: '“'; color: var(--tone); font-size: 1.3em; line-height: 0; margin-right: 1px; }
+.mcard__hl {                                /* where the highlight sits in the full text */
+  color: inherit;
+  background: linear-gradient(transparent 58%, color-mix(in srgb, var(--tone) 26%, transparent) 58%);
+  padding: 0 .05em;
+}
+
+/* opening a card: only when the TEXT is hovered (not the photo), when the card has keyboard
+   focus, or when the text is tapped on a phone. Maxime's is already complete. */
+.mcard:not(.mcard--short):is(:has(.mcard__body:hover), :focus-visible, .is-open) .mcard__body {
+  height: calc(100% - 64px);               /* leaves a strip of the photo visible on top */
+  box-shadow: 0 -14px 24px -16px rgba(58, 45, 39, .45);
+}
+.mcard:not(.mcard--short):is(:has(.mcard__body:hover), :focus-visible, .is-open) .mcard__preview { opacity: 0; }
+.mcard:not(.mcard--short):is(:has(.mcard__body:hover), :focus-visible, .is-open) .mcard__full { opacity: 1; pointer-events: auto; transition-delay: .28s; }
+.mcard__body { cursor: pointer; }
+.mcard:is(:has(.mcard__body:hover), .is-open) .mcard__body { cursor: auto; }
+/* never open while the strip is being dragged */
+.reel.is-dragging .mcard .mcard__body { height: var(--body) !important; box-shadow: none !important; }
+.reel.is-dragging .mcard .mcard__preview { opacity: 1 !important; }
+.reel.is-dragging .mcard .mcard__full { opacity: 0 !important; }
 
 /* the ‹ › controls under the strip */
 .reel-controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 4px; }

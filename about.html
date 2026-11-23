@@ -82,8 +82,8 @@
   </section>
 
   <!-- ============ FROM OUR MEMBERS ============
-       Photos live in assets/ (square, about 400 × 400). Mikylla's card shows her initial
-       until assets/mikylla.jpg is added — it will appear automatically. -->
+       Photos live in assets/ (portrait 4:5, about 640 × 800). If a photo is missing,
+       that card shows a colour block with the member's initial. -->
   <section class="section">
     <div class="container">
       <div class="head reveal">
@@ -99,7 +99,7 @@
            or use the arrows to move it by hand. js/reel.js -->
       <div class="reel" data-reel>
         <div class="reel__track">
-          <article class="mcard mcard--left" tabindex="0" style="--tone:var(--coral);--tint:var(--coral-soft)">
+          <article class="mcard mcard--short mcard--left" tabindex="0" style="--tone:var(--coral);--tint:var(--coral-soft)">
             <figure class="mcard__photo">
               <img src="assets/maxime.jpg" alt="Photo of Maxime" loading="lazy"
                 draggable="false"
@@ -108,7 +108,7 @@
             </figure>
             <div class="mcard__body">
               <p class="mcard__meta"><span class="mcard__name">Maxime</span><span class="mcard__no">01 / 05</span></p>
-              <blockquote class="mcard__quote mcard__quote--short">A person's potential has no gender, and their dreams should have no limits.</blockquote>
+              <blockquote class="mcard__hl-quote">A person's potential has no gender, and their dreams should have no limits.</blockquote>
             </div>
           </article>
           <article class="mcard mcard--right" tabindex="0" style="--tone:var(--teal);--tint:var(--teal-soft)">
@@ -120,7 +120,11 @@
             </figure>
             <div class="mcard__body">
               <p class="mcard__meta"><span class="mcard__name">Andrian</span><span class="mcard__no">02 / 05</span></p>
-              <blockquote class="mcard__quote">Gender equality matters to me because everyone deserves equal respect, rights, and opportunities regardless of gender. I believe no one should be judged or treated unfairly because of who they are. For me, equality means giving everyone a fair chance to succeed. We should learn to respect each other’s differences and treat everyone with kindness.</blockquote>
+              <div class="mcard__preview" aria-hidden="true">
+                <p class="mcard__hl-quote">For me, equality means giving everyone a fair chance to succeed.</p>
+                <span class="mcard__more">Read more <i class="ph-light ph-arrow-up"></i></span>
+              </div>
+              <blockquote class="mcard__full">Gender equality matters to me because everyone deserves equal respect, rights, and opportunities regardless of gender. I believe no one should be judged or treated unfairly because of who they are. <mark class="mcard__hl">For me, equality means giving everyone a fair chance to succeed.</mark> We should learn to respect each other’s differences and treat everyone with kindness.</blockquote>
             </div>
           </article>
           <article class="mcard mcard--left" tabindex="0" style="--tone:var(--berry);--tint:var(--berry-soft)">
@@ -132,7 +136,11 @@
             </figure>
             <div class="mcard__body">
               <p class="mcard__meta"><span class="mcard__name">Dionne</span><span class="mcard__no">03 / 05</span></p>
-              <blockquote class="mcard__quote">Gender equality is not just about treating everyone the same, it is about making sure everyone has the same opportunities, rights, and respect regardless of gender. Even today, discrimination, stereotypes, and unequal treatment still exist, which is why we must not turn a blind eye to them. We believe that change begins when people acknowledge that the problem still exists and choose to be part of the solution. Everyone deserves to feel valued, heard, and empowered.</blockquote>
+              <div class="mcard__preview" aria-hidden="true">
+                <p class="mcard__hl-quote">We believe that change begins when people acknowledge that the problem still exists and choose to be part of the solution.</p>
+                <span class="mcard__more">Read more <i class="ph-light ph-arrow-up"></i></span>
+              </div>
+              <blockquote class="mcard__full">Gender equality is not just about treating everyone the same, it is about making sure everyone has the same opportunities, rights, and respect regardless of gender. Even today, discrimination, stereotypes, and unequal treatment still exist, which is why we must not turn a blind eye to them. <mark class="mcard__hl">We believe that change begins when people acknowledge that the problem still exists and choose to be part of the solution.</mark> Everyone deserves to feel valued, heard, and empowered.</blockquote>
             </div>
           </article>
           <article class="mcard mcard--right" tabindex="0" style="--tone:#C88B12;--tint:var(--sun-soft)">
@@ -144,10 +152,14 @@
             </figure>
             <div class="mcard__body">
               <p class="mcard__meta"><span class="mcard__name">Amiel</span><span class="mcard__no">04 / 05</span></p>
-              <blockquote class="mcard__quote">Society is now loudly demanding more equal treatment and wages between straight men, women, and LGBTQIA+. We must heed these calls by advancing and empowering the rights of women and LGBTQIA+, both in school and in the workplace. When everyone is given the opportunity to participate, contribute, and thrive without prejudice, all can be more productive and harmonious; all people will be valued regardless of gender or creed.</blockquote>
+              <div class="mcard__preview" aria-hidden="true">
+                <p class="mcard__hl-quote">…all people will be valued regardless of gender or creed.</p>
+                <span class="mcard__more">Read more <i class="ph-light ph-arrow-up"></i></span>
+              </div>
+              <blockquote class="mcard__full">Society is now loudly demanding more equal treatment and wages between straight men, women, and LGBTQIA+. We must heed these calls by advancing and empowering the rights of women and LGBTQIA+, both in school and in the workplace. When everyone is given the opportunity to participate, contribute, and thrive without prejudice, all can be more productive and harmonious; <mark class="mcard__hl">all people will be valued regardless of gender or creed.</mark></blockquote>
             </div>
           </article>
-          <article class="mcard mcard--left" tabindex="0" style="--tone:var(--coral);--tint:var(--coral-soft)">
+          <article class="mcard mcard--left" tabindex="0" style="--tone:#4F78B8;--tint:#DCE6F4">
             <figure class="mcard__photo">
               <img src="assets/mikylla.jpg" alt="Photo of Mikylla" loading="lazy"
                 draggable="false"
@@ -156,7 +168,11 @@
             </figure>
             <div class="mcard__body">
               <p class="mcard__meta"><span class="mcard__name">Mikylla</span><span class="mcard__no">05 / 05</span></p>
-              <blockquote class="mcard__quote">Gender equality matters to me because no one should have to change who they are to be accepted. Gender should never decide what we can do or how much respect we get. We should all be free to be ourselves without shame. I want to help build a kinder, less judgmental world where everyone feels they belong. Without the labels, we are all different, we are all valid, and we all deserve the same respect and dignity. <strong class="mcard__pull">“Labels may well divide us in the eyes of others, but they will never in any way define our value.”</strong></blockquote>
+              <div class="mcard__preview" aria-hidden="true">
+                <p class="mcard__hl-quote">Labels may well divide us in the eyes of others, but they will never in any way define our value.</p>
+                <span class="mcard__more">Read more <i class="ph-light ph-arrow-up"></i></span>
+              </div>
+              <blockquote class="mcard__full">Gender equality matters to me because no one should have to change who they are to be accepted. Gender should never decide what we can do or how much respect we get. We should all be free to be ourselves without shame. I want to help build a kinder, less judgmental world where everyone feels they belong. Without the labels, we are all different, we are all valid, and we all deserve the same respect and dignity. <strong class="mcard__pull">“<mark class="mcard__hl">Labels may well divide us in the eyes of others, but they will never in any way define our value.</mark>”</strong></blockquote>
             </div>
           </article>
         </div>

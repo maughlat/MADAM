@@ -48,6 +48,24 @@
   }
   measure();
   window.addEventListener('resize', measure);
+
+  // fit each highlight into at most 3 lines by easing its size down (never cutting words)
+  const MAX_HL = 22.4, MIN_HL = 15, MAX_LINES = 3;   // below 15px gets hard to read, so a very long highlight may use a 4th line on narrow cards
+  function fitHighlights() {
+    track.querySelectorAll('.mcard__hl-quote').forEach(q => {
+      let size = MAX_HL;
+      q.style.setProperty('--hl-size', `${size}px`);
+      while (size > MIN_HL && q.offsetHeight / (size * 1.3) > MAX_LINES + 0.2) {
+        size -= 0.5;
+        q.style.setProperty('--hl-size', `${size}px`);
+      }
+    });
+    measure();
+  }
+  fitHighlights();
+  if (document.fonts) document.fonts.ready.then(fitHighlights);
+  let fitTimer;
+  window.addEventListener('resize', () => { clearTimeout(fitTimer); fitTimer = setTimeout(fitHighlights, 150); });
   track.querySelectorAll('img').forEach(img => img.addEventListener('load', measure, { once: true }));
 
   const wrap = n => ((n % loopW) - loopW) % loopW;          // keep x within one loop, always ≤ 0
@@ -144,18 +162,28 @@
   reel.addEventListener('pointerup', endDrag);
   reel.addEventListener('pointercancel', endDrag);
 
-  /* ---------- tap to focus a card (touch screens) ---------- */
+  /* ---------- tap a card (touch screens) ----------
+     Tap the photo: bring the card forward (full-colour photo).
+     Tap the text:  also open the full testimony.
+     Tap the same part again (or anywhere else) to close. */
   const clear = () => {
     reel.classList.remove('has-active');
-    track.querySelectorAll('.mcard.is-active').forEach(c => c.classList.remove('is-active'));
+    track.querySelectorAll('.mcard.is-active, .mcard.is-open').forEach(c => c.classList.remove('is-active', 'is-open'));
   };
   reel.addEventListener('click', e => {
     const card = e.target.closest('.mcard');
     if (!card || canHover) return;
+    const onText = !!e.target.closest('.mcard__body');
     const wasActive = card.classList.contains('is-active');
+    const wasOpen = card.classList.contains('is-open');
     clear();
-    if (!wasActive) { card.classList.add('is-active'); reel.classList.add('has-active'); hold(4000); }
-    else hold(800);
+    if (onText && !wasOpen) {
+      card.classList.add('is-active', 'is-open'); reel.classList.add('has-active'); hold(4000);
+    } else if (!onText && !wasActive) {
+      card.classList.add('is-active'); reel.classList.add('has-active'); hold(4000);
+    } else {
+      hold(800);
+    }
   });
   document.addEventListener('click', e => { if (!reel.contains(e.target)) clear(); });
 })();
